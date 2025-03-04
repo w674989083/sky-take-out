@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sky.mapper.CategoryMapper">
+
+    <select id="getPageList" resultType="com.sky.vo.CategoryVO"
+            parameterType="com.sky.dto.CategoryPageQueryDTO">
+        SELECT
+            id,
+            type,
+            name,
+            sort,
+            status,
+            create_time,
+            update_time,
+            create_user,
+            update_user
+        FROM
+            category
+        <where>
+            <if test="category.type != null">
+                type = #{category.type}
+            </if>
+            <if test="category.name != null and category.name != ''">
+                AND name LIKE concat('%',#{category.name},'%')
+            </if>
+        </where>
+        ORDER BY
+            sort,
+            create_time DESC
+    </select>
+</mapper>
