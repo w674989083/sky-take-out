@@ -19,11 +19,12 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @Slf4j
-@Component
 public class AliOssUtil {
 
-    @Autowired
-    private AliOssProperties aliOssProperties;
+    private String endpoint;
+    private String accessKeyId;
+    private String accessKeySecret;
+    private String bucketName;
 
     /**
      * 文件上传
@@ -33,11 +34,6 @@ public class AliOssUtil {
      * @return
      */
     public String upload(byte[] bytes, String objectName) {
-        String endpoint = aliOssProperties.getEndpoint();
-        String accessKeyId = aliOssProperties.getAccessKeyId();
-        String accessKeySecret = aliOssProperties.getAccessKeySecret();
-        String bucketName = aliOssProperties.getBucketName();
-
         // 生成一个新的不重复的文件名
         String dir = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM"));
         String fileName = UUID.randomUUID() + objectName.substring(objectName.lastIndexOf("."));
